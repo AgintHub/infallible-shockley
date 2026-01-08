@@ -1,112 +1,96 @@
 dag_type: plain_text
-description: A highly concurrent workflow DAG that defines a sequence of tasks to
-  build an LLM model.
-name: build_llmdag
+description: Create a restaurant from scratch, including planning, design, construction,
+  and launch.
+name: build_restaurant
 nodes:
-  codifyllmbackend:
+  conceptualize_restaurant_idea:
     agent: false
-    description: Implement the backend for the LLM model.
-    name: codifyllmbackend
-    nodes_depended_on:
-    - developllmarchitecture
-    nodes_dependent_on: []
-    prompt: Implement the backend for the LLM model based on the designed architecture.
-      Write code for the model's core components, including data ingestion, processing,
-      and output generation. Provide clear code snippets and descriptions.
-  definellmobjectives:
-    agent: false
-    description: Identify and document LLM model objectives.
-    name: definellmobjectives
+    description: Develop a clear idea of what the restaurant will be and what it will
+      offer.
+    name: conceptualize_restaurant_idea
     nodes_depended_on: []
-    nodes_dependent_on: []
-    prompt: Describe the primary goals and requirements for the LLM model (e.g., dialogue
-      management, text classification, language translation). Provide clear bullet
-      points.
-  deployllmmodel:
+    nodes_dependent_on:
+    - define_restaurant_scope
+    prompt: Define the concept, theme, and overall vision for the restaurant, including
+      its target audience and unique selling points.
+  construct_restaurant:
     agent: false
-    description: Deploy the trained LLM model for use cases.
-    name: deployllmmodel
+    description: Bring the restaurant's design to life through construction and installation.
+    name: construct_restaurant
     nodes_depended_on:
-    - trainllmmodel
-    nodes_dependent_on: []
-    prompt: Deploy the trained LLM model to the intended use cases, including web
-      applications, mobile apps, or other interfaces. Provide clear instructions for
-      setup and configuration.
-  determinellmmagnitude:
+    - design_restaurant_layout
+    nodes_dependent_on:
+    - obtain_necessary_permits
+    prompt: Build out the restaurant's physical space, including construction, installation
+      of equipment, and finishing work.
+  define_restaurant_scope:
     agent: false
-    description: Decide on the scope and scale of the LLM model.
-    name: determinellmmagnitude
+    description: Establish the parameters and boundaries of the restaurant project.
+    name: define_restaurant_scope
     nodes_depended_on:
-    - definellmobjectives
-    - specifyllmdomain
-    nodes_dependent_on: []
-    prompt: Determine the scope and scale of the LLM model considering its objectives
-      and domain. Specify the intended impact and reach of the model (e.g., number
-      of users, data volume). Provide clear bullet points.
-  developllmarchitecture:
+    - conceptualize_restaurant_idea
+    nodes_dependent_on:
+    - develop_business_plan
+    prompt: Determine the restaurant's size, location, and overall scope, including
+      the number of seats, staff, and equipment needed.
+  design_restaurant_layout:
     agent: false
-    description: Design the architecture for the LLM model.
-    name: developllmarchitecture
+    description: Develop a functional and aesthetic design for the restaurant's physical
+      space.
+    name: design_restaurant_layout
     nodes_depended_on:
-    - planllmdatacollection
-    nodes_dependent_on: []
-    prompt: Design the architecture for the LLM model based on the objectives, domain,
-      magnitude, and data collection plan. Describe the model's components, interactions,
-      and interfaces. Provide clear diagrams and bullet points.
-  monitorllmmodel:
+    - secure_funding
+    nodes_dependent_on:
+    - construct_restaurant
+    prompt: Create a detailed design and layout for the restaurant, including the
+      kitchen, dining area, and other spaces.
+  develop_business_plan:
     agent: false
-    description: Regularly monitor and evaluate the LLM model's performance.
-    name: monitorllmmodel
+    description: Outline the restaurant's financial, marketing, and operational plans.
+    name: develop_business_plan
     nodes_depended_on:
-    - refinellmmodel
-    nodes_dependent_on: []
-    prompt: Regularly monitor and evaluate the LLM model's performance in real-world
-      scenarios. Provide clear metrics and recommendations for improvement.
-  planllmdatacollection:
+    - define_restaurant_scope
+    nodes_dependent_on:
+    - secure_funding
+    prompt: Create a comprehensive business plan, including financial projections,
+      marketing strategies, and operational logistics.
+  hire_and_train_staff:
     agent: false
-    description: Document the plan for data collection and curation.
-    name: planllmdatacollection
+    description: Assemble and prepare the team that will bring the restaurant to life.
+    name: hire_and_train_staff
     nodes_depended_on:
-    - specifyllmdomain
-    - determinellmmagnitude
-    nodes_dependent_on: []
-    prompt: Outline the plan for data collection and curation considering the LLM
-      model's objectives, domain, and magnitude. Describe the types of data required,
-      data sources, and data quantity. Provide clear bullet points.
-  refinellmmodel:
+    - obtain_necessary_permits
+    nodes_dependent_on:
+    - launch_restaurant
+    prompt: Recruit, hire, and train the restaurant's staff, including chefs, servers,
+      and management.
+  launch_restaurant:
     agent: false
-    description: Update and improve the LLM model based on validation results.
-    name: refinellmmodel
+    description: Introduce the restaurant to the world and begin serving customers.
+    name: launch_restaurant
     nodes_depended_on:
-    - validatellmmodel
+    - hire_and_train_staff
     nodes_dependent_on: []
-    prompt: Update and improve the LLM model based on the validation results. Provide
-      clear descriptions of changes and improvements.
-  specifyllmdomain:
+    prompt: Open the restaurant to the public, including marketing and promotional
+      efforts to attract customers.
+  obtain_necessary_permits:
     agent: false
-    description: Identify the domain or topic for the LLM model.
-    name: specifyllmdomain
+    description: Secure the necessary permissions and approvals to operate the restaurant.
+    name: obtain_necessary_permits
     nodes_depended_on:
-    - definellmobjectives
-    nodes_dependent_on: []
-    prompt: Specify the domain or topic that the LLM model will be trained on (e.g.,
-      conversational AI, medical diagnosis). Provide clear bullet points.
-  trainllmmodel:
+    - construct_restaurant
+    nodes_dependent_on:
+    - hire_and_train_staff
+    prompt: Obtain all necessary permits and licenses to operate the restaurant, including
+      food service permits and liquor licenses.
+  secure_funding:
     agent: false
-    description: Train the LLM model using the collected data.
-    name: trainllmmodel
+    description: Acquire the financial resources needed to bring the restaurant to
+      life.
+    name: secure_funding
     nodes_depended_on:
-    - planllmdatacollection
-    - codifyllmbackend
-    nodes_dependent_on: []
-    prompt: Train the LLM model using the collected data and implementing the backend.
-      Provide clear metrics and evaluation results.
-  validatellmmodel:
-    agent: false
-    description: Evaluate the performance and accuracy of the LLM model.
-    name: validatellmmodel
-    nodes_depended_on:
-    - deployllmmodel
-    nodes_dependent_on: []
-    prompt: Evaluate the performance and accuracy of the LLM model in real-world scenarios.
-      Provide clear metrics and recommendations for improvement.
+    - develop_business_plan
+    nodes_dependent_on:
+    - design_restaurant_layout
+    prompt: Obtain the necessary funding to support the restaurant's launch and ongoing
+      operations, through investments, loans, or other means.
